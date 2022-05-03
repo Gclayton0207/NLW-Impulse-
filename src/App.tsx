@@ -1,7 +1,18 @@
-import './App.css'
+interface ButtonProps {
+  text: string;
+}
+
+function Button (props: ButtonProps) {
+  return <button>{props.text}</button>
+}
 
 function App() {
-  return <h1>Hello World!</h1>
+  return (
+    <div>
+      <Button text="enviar"/>
+      <Button text="ok"/>
+    </div>
+  )
 }
 
 export default App
