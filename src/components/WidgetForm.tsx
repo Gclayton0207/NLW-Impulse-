@@ -3,6 +3,7 @@ import { CloseButton } from "./CloseButton";
 import bugImageUrl from "../assets/bug.svg";
 import ideaImageUrl from "../assets/idea.svg";
 import thoughtImageUrl from "../assets/thought.svg";
+import { useState } from "react";
 
 const feedbacktypes = {
   BUG: {
@@ -27,7 +28,12 @@ const feedbacktypes = {
     },
   },
 };
+
+
+type Feedbacktype = keyof typeof feedbacktypes;
+
 export function WidgetForm() {
+    const [Feedbacktype, setFeedbacktype] = useState <Feedbacktype | null> (null);
   return (
     <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
       <header>
@@ -38,8 +44,11 @@ export function WidgetForm() {
           { Object.entries(feedbacktypes).map(([key, value]) =>{
               return(
                   <button
-                    className="bg-zinc-800 rounded-lg py-5 w-24 flex-1 flex-col items-center gap-2 border-2 border-transparent 
+                    key={key}
+                    className="bg-zinc-800 rounded-lg py-5 w-24 flex-1 flex flex-col items-center gap-2 border-2 border-transparent 
                     hover:border-brand-500  focus:border-brand-500 focus:outline-none"
+                    type="button"
+                    onClick={()=> setFeedbacktype(key as Feedbacktype)}
                   >
                       <img src={value.image.source} alt={value.image.alt}/>
                      <span>{value.title}</span> 
