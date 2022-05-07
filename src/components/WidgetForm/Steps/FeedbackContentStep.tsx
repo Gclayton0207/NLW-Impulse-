@@ -1,5 +1,5 @@
 import { ArrowLeft, Camera } from "phosphor-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { CloseButton } from "../../CloseButton";
 import { Feedbacktype, feedbacktypes } from "../Index";
 import { ScreenshotButton } from "../ScreenshotButton";
@@ -15,6 +15,16 @@ export function FeedbackContentStep({
 }: FeedbackContentStepProps) {
   const [screenshot, setScreenshot] = useState <string | null>(null)
   const feedbackTypeInfo = feedbacktypes[feedbacktype];
+  const [comment,setComent] = useState('');
+
+  function handleSubmitFeedback(event : FormEvent ){
+    event.preventDefault();
+    console.log({
+      screenshot,
+      comment,
+    })
+    
+  }
   return (
     <>
       <header>
@@ -38,13 +48,14 @@ export function FeedbackContentStep({
         </span>
         <CloseButton />
       </header>
-      <form className="my-4 w-full">
+      <form onSubmit={handleSubmitFeedback} className="my-4 w-full">
         <textarea
           className="min-w[304px] w-full min-h[112px] text-sm placeholder-zinc-400 text-zinc-100
           border-zinc-600 bg-transparent rounded-md focus:border-brand-500 focus:ring-brand-500
             focus:outline-none focus:ring-1 resize-none scrollbar-thumb-zinc-700 scrollbar-track-transparent
             scrollbar-thin"
           placeholder="Conte com detalhes o que esta acontecendo..."
+          onChange={event => setComent(event.target.value)}
         />
         <footer className="flex gap-2 mt-2">
          <ScreenshotButton
@@ -53,8 +64,10 @@ export function FeedbackContentStep({
          />
           <button
             type="submit"
+            disabled={comment.length===0}
             className="p-2 bg-brand-500 rounded-md border-transparent flex-1 flex-justify-center hover:bg-brand-300
-            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition"
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition
+            disabled:opacity-50 disabled:hover:bg-brand-500"
           >
             Enviar feedback
           </button>
